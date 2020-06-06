@@ -38,9 +38,10 @@ app.get('/image', async (req, res) => {
         const height = req.query.height ? parseInt(req.query.height, 10) : 1080
 
         const timeout = req.query.timeout ? Math.min(30000, parseInt(req.query.timeout, 10)) : 0
-        const quality = req.query.quality ? Math.max(0, Math.min(100, parseInt(req.query.quality, 10))) : 100
+        const quality = req.query.quality ? Math.max(0, Math.min(100, parseInt(req.query.quality, 10))) : undefined
         const omitBackground = req.query.omitBackground ? req.query.omitBackground === 'true' : false
         const type = req.query.type === 'jpg' ? 'jpg' : 'png'
+        const fullPage = req.query.fullPage ? req.query.fullPage === 'true' : false
         const download = req.query.download ? req.query.download === 'true' : false
         const filename = req.query.filename ? req.query.filename : `download.${type}`
         
@@ -97,6 +98,7 @@ app.get('/image', async (req, res) => {
 
         await page.screenshot({
             path: filepath,
+            fullPage,
             omitBackground,
             quality,
             clip
