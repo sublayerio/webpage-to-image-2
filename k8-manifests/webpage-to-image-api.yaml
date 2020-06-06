@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webpage-to-image-api
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: webpage-to-image-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webpage-to-image-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webpage-to-image-api
+  template:
+    metadata:
+      labels:
+        app: webpage-to-image-api
+    spec:
+      containers:
+        - name: webpage-to-image-api
+          image: sublayer/webpage-to-image-api:v1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
