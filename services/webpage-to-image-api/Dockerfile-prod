@@ -1,5 +1,10 @@
 FROM buildkite/puppeteer
 
+RUN apt-get update
+RUN apt-get install fonts-noto -y
+RUN apt-get install fonts-noto-color-emoji -y
+RUN fc-cache -fv
+
 # WORKDIR specifies the directory our
 # application's code will live within
 WORKDIR /app
