@@ -1,7 +1,6 @@
 # Webpage to Image
 
 A simple webservice that takes webpages into images using the headless Chrome API.
-
 ## Usage
 
 The following query parameters can be passed:
