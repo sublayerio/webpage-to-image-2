@@ -1,11 +1,12 @@
-FROM arm64v8/node:14
+FROM arm64v8/ubuntu
 
 RUN apt-get update
-# RUN apt-get install fonts-noto -y
-# RUN apt-get install fonts-noto-color-emoji -y
-# RUN fc-cache -fv
 RUN apt-get install chromium-browser chromium-codecs-ffmpeg -y
-
+RUN apt-get install nodejs npm -y
+RUN apt-get install fonts-noto -y
+RUN apt-get install fonts-noto-color-emoji -y
+RUN apt-get install fontconfig
+RUN fc-cache -fv
 
 # WORKDIR specifies the directory our
 # application's code will live within
@@ -17,7 +18,7 @@ COPY package.json /app
 
 # We then run npm install to install
 # the npm dependencies for our application
-RUN yarn install
+RUN npm install
 
 # We then copy the rest of our application
 # To the app directory
@@ -25,6 +26,6 @@ COPY src /app/src
 
 # We start our application by calling
 # npm start
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
 
 EXPOSE 3000
