@@ -1,9 +1,9 @@
 FROM arm64v8/node:14
 
 RUN apt-get update
-RUN apt-get install fonts-noto -y
-RUN apt-get install fonts-noto-color-emoji -y
-RUN fc-cache -fv
+# RUN apt-get install fonts-noto -y
+# RUN apt-get install fonts-noto-color-emoji -y
+# RUN fc-cache -fv
 RUN apt-get install chromium-browser chromium-codecs-ffmpeg -y
 
 

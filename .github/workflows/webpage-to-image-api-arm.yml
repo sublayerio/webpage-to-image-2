@@ -6,7 +6,7 @@ on:
       - created
 
 jobs:
-  build-book-legacy-api:
+  build-webpage-to-image-api:
     runs-on: ubuntu-latest
 
     steps:
