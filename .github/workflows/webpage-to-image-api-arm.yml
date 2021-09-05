@@ -1,0 +1,31 @@
+name: Build Webpage to Image API
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build-book-legacy-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v3
+        with:
+          buildx-version: latest
+          qemu-version: latest
+      - name: Available platforms
+        run: echo ${{ steps.buildx.outputs.platforms }}
+      - name: Set tag as environment variable
+        id: vars
+        run: echo ::set-output name=tag::$(echo ${GITHUB_REF:10})
+      - name: Build the Docker image
+        working-directory: ./services/book-api
+        run: docker build . --file Dockerfile-arm64v8 --platform linux/arm64 --output "type=image,push=false"  --tag sublayer/webpage-to-image-api-arm64v8:${{ steps.vars.outputs.tag }}
+      - name: Login into Docker Registry
+        run: docker login -u sublayer -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push image to Docker Registry
+        run: docker push sublayer/webpage-to-image-api:${{ steps.vars.outputs.tag }}
